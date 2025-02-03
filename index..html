@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Web Page</title>
+    <style>
+        /* Part 1: CSS3 Transitions and Animations */
+        .transition-box {
+            width: 200px;
+            height: 100px;
+            background-color: #3498db;
+            transition: all 0.3s ease;
+            margin: 20px;
+        }
+
+        .transition-box:hover {
+            transform: scale(1.1);
+            background-color: #2980b9;
+        }
+
+        .animated-card {
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .animated-card:hover {
+            transform: translateY(-5px);
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes slideIn {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .slide-animation {
+            animation: slideIn 1s ease-out;
+        }
+
+        .hidden {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Part 3: Combined Animation Styles */
+        .click-animation {
+            animation: pulse 1s ease;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Part 1 Elements -->
+    <div class="transition-box"></div>
+    <div class="animated-card">
+        <h2>Hover Card</h2>
+        <p>Hover over me to see elevation effect!</p>
+    </div>
+
+    <!-- Part 2/3 Interactive Elements -->
+    <button id="spinButton">Toggle Spinner</button>
+    <div class="spinner"></div>
+
+    <button id="animateButton">Trigger Pulse</button>
+
+    <div id="modal" class="hidden">
+        <h2>Dynamic Modal</h2>
+        <p>This modal appears with animation!</p>
+    </div>
+    <button id="toggleModal">Toggle Modal</button>
+
+    <script>
+        // Part 2: JavaScript Functions
+        // Function with parameters and return value
+        function calculateArea(width, height) {
+            return width * height;
+        }
+
+        // Demonstrate scope
+        function scopeDemonstration() {
+            const localVar = "I'm local";
+            globalVar = "I'm global"; // Implicit global declaration
+            console.log(localVar);
+        }
+
+        // Toggle animation class
+        function toggleModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Part 3: Combined Interactions
+        let isSpinning = false;
+        const spinner = document.querySelector('.spinner');
+
+        document.getElementById('spinButton').addEventListener('click', () => {
+            isSpinning = !isSpinning;
+            spinner.style.animationPlayState = isSpinning ? 'running' : 'paused';
+        });
+
+        document.getElementById('animateButton').addEventListener('click', () => {
+            const btn = document.getElementById('animateButton');
+            btn.classList.add('click-animation');
+            
+            // Remove animation class after completion
+            setTimeout(() => {
+                btn.classList.remove('click-animation');
+            }, 1000);
+        });
+
+        document.getElementById('toggleModal').addEventListener('click', toggleModal);
+
+        // Demonstrate function usage
+        console.log("Area of 5x10 rectangle:", calculateArea(5, 10));
+        scopeDemonstration();
+        try {
+            console.log(globalVar); // Accessible
+            console.log(localVar); // Throws error
+        } catch(e) {
+            console.log("localVar is not accessible here");
+        }
+    </script>
+</body>
+</html>
